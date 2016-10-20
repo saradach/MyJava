@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration debug="true"
+	xmlns:log4j='http://jakarta.apache.org/log4j/'>
+
+<!-- Declare the ConsoleAppender -->
+	<appender name="console" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n" />
+		</layout>
+	</appender>
+
+	<!-- Declare the RollingFileAppender -->
+	<appender name="file" class="org.apache.log4j.RollingFileAppender">
+		<param name="append" value="false" />
+		<param name="maxFileSize" value="1MB" />
+		<param name="maxBackupIndex" value="10" />
+		<param name="file" value="mylog.log" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n" />
+		</layout>
+	</appender>
+
+	<!-- Declare the SMTPAppender -->
+	<appender name="EMAIL" class="org.apache.log4j.net.SMTPAppender">
+		<param name="BufferSize" value="512" />
+		<param name="SMTPProtocol" value="smtps" />
+		<param name="SMTPHost" value="smtp.gmail.com" />
+		<param name="SMTPPort" value="465" />
+		<param name="TLS" value="true" />
+		<param name="SMTPUsername" value="" />
+		<param name="SMTPPassword" value="" />
+		<param name="From" value="" />
+		<param name="To" value="" />
+		<param name="Subject" value="ERROR: Application message" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMin" value="ERROR" />
+			<param name="LevelMax" value="FATAL" />
+		</filter>
+	</appender>
+
+	<root>
+		<level value="DEBUG" />
+		<appender-ref ref="console" />
+		<appender-ref ref="file" />
+		<appender-ref ref="EMAIL" />
+
+	</root>
+
+</log4j:configuration>
